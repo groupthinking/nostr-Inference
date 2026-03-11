@@ -1,0 +1,31 @@
+{
+  "name": "nostr-inference",
+  "version": "1.0.0",
+  "description": "Nostr registry-of-kinds → full codegen (JSON Schema, TS/Zod, Rust, DB) + decentralized events (kind 30078) + Inference Orchestration Layer",
+  "main": "src/iol/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prisma:generate": "npx prisma generate"
+  },
+  "keywords": [
+    "nostr",
+    "inference",
+    "orchestration",
+    "edge-computing",
+    "zod",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.22.4",
+    "rx-nostr": "^2.0.0",
+    "@prisma/client": "^5.9.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "prisma": "^5.9.0",
+    "@types/node": "^20.11.0"
+  }
+}

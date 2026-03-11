@@ -20,3 +20,8 @@ cd nostr-Inference
 npm install          # TS + IOL
 cargo build          # Rust (optional)
 npx prisma generate  # DB (optional)
+```
+
+Start building the future. This is no longer a chat — it's real code.
+
+Last updated: March 10, 2026

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nostr-protocol/registry-of-kinds/schema.json",
+  "title": "Nostr Event — validated against official registry-of-kinds (March 2026)",
+  "type": "object",
+  "required": ["kind", "created_at", "pubkey", "id", "sig", "tags"],
+  "properties": {
+    "kind": { "type": "integer", "minimum": 0 },
+    "content": { "type": "string" },
+    "tags": { "type": "array", "items": { "$ref": "#/$defs/tag" } }
+  },
+  "allOf": [
+    { "if": { "properties": { "kind": { "const": 0 } } }, "then": { "$ref": "#/$defs/kind0" } },
+    { "if": { "properties": { "kind": { "const": 1 } } }, "then": { "$ref": "#/$defs/kind1" } },
+    { "if": { "properties": { "kind": { "const": 3 } } }, "then": { "$ref": "#/$defs/kind3" } },
+    { "if": { "properties": { "kind": { "const": 5 } } }, "then": { "$ref": "#/$defs/kind5" } },
+    { "if": { "properties": { "kind": { "const": 6 } } }, "then": { "$ref": "#/$defs/kind6" } },
+    { "if": { "properties": { "kind": { "const": 7 } } }, "then": { "$ref": "#/$defs/kind7" } },
+    { "if": { "properties": { "kind": { "const": 20 } } }, "then": { "$ref": "#/$defs/kind20" } },
+    { "if": { "properties": { "kind": { "const": 21 } } }, "then": { "$ref": "#/$defs/kind21" } },
+    { "if": { "properties": { "kind": { "const": 22 } } }, "then": { "$ref": "#/$defs/kind22" } },
+    { "if": { "properties": { "kind": { "const": 777 } } }, "then": { "$ref": "#/$defs/kind777" } },
+    { "if": { "properties": { "kind": { "const": 1018 } } }, "then": { "$ref": "#/$defs/kind1018" } }
+  ],
+  "$defs": {
+    "tag": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+    "pubkey": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "id": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "addr": { "type": "string", "pattern": "^[0-9a-f]{64}-[0-9]+-[0-9a-f]{64}$|^naddr1" },
+    "relay": { "type": "string", "format": "uri" },
+    "etag": { "prefixItems": [{ "const": "e" }, { "$ref": "#/$defs/id" }, { "$ref": "#/$defs/relay" }, { "enum": ["reply","root"] }, { "$ref": "#/$defs/pubkey" }] },
+    "kind0": { "properties": { "content": { "type": "string", "format": "json" } }, "tags": { "contains": { "prefixItems": [{ "const": "emoji" }] } } },
+    "kind1": { "tags": { "items": { "oneOf": [{ "$ref": "#/$defs/etag" }, { "prefixItems": [{ "const": "imeta" }] }] } } },
+    "kind20": { "required": ["imeta"], "tags": { "contains": { "prefixItems": [{ "const": "imeta" }] } } },
+    "kind21": { "$ref": "#/$defs/kind20" },
+    "kind777": { "required": ["cmd"], "tags": { "contains": { "prefixItems": [{ "const": "cmd" }, { "const": "REQ" }] } } }
+  }
+}
