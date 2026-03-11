@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+target/
+dist/
+build/
+
+# Prisma
+.env
+prisma/migrations/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+/tmp/
+*.tmp

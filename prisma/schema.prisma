@@ -1,0 +1,20 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+
+model NostrEvent {
+  id          String   @id @db.VarChar(64)
+  kind        Int
+  pubkey      String   @db.VarChar(64)
+  created_at  BigInt
+  content     String
+  sig         String   @db.VarChar(128)
+  tags        Json     @db.JsonB
+
+  imeta_url   String?  @db.Text
+  imeta_mime  String?  @db.VarChar(50)
+  imeta_hash  String?  @db.VarChar(64)
+
+  @@index([kind, pubkey, created_at])
+  @@index([imeta_hash])
+  @@index([kind, imeta_mime])
+}
