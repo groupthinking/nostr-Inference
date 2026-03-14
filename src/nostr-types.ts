@@ -21,7 +21,7 @@ export const BaseNostrEventSchema = z.object({
 export const NostrEventSchema = z.discriminatedUnion("kind", [
   BaseNostrEventSchema.extend({ kind: z.literal(0), content: z.string() /* JSON */ }),
   BaseNostrEventSchema.extend({ kind: z.literal(1) }),
-  BaseNostrEventSchema.extend({ kind: z.literal(20), tags: z.array(z.union([ImmetaTagSchema, z.any()])) }).refine(t => t.tags.some(t => t[0] === "imeta")),
+  BaseNostrEventSchema.extend({ kind: z.literal(20), tags: z.array(z.union([ImmetaTagSchema, z.any()])) }),
 ]);
 
 export type NostrEvent = z.infer<typeof NostrEventSchema>;

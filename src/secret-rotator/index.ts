@@ -56,7 +56,7 @@ export class SecretRotator {
 
         await this.updateLocation(loc, keyName, newValue, dryRun, verbose);
       } catch (e) {
-        console.error(`⚠️ ${loc.name} failed:`, e.message);
+        console.error(`⚠️ ${loc.name} failed:`, (e as Error).message);
       }
     }
 
@@ -98,8 +98,7 @@ export class SecretRotator {
       return;
     }
 
-    execSync(`security delete-generic-password -s "${service}" 2>/dev/null || true`);
-    execSync(`security add-generic-password -s "${service}" -a "" -w "${newValue}"`);
+    execSync(`security add-generic-password -U -s "${service}" -a "" -w "${newValue}"`);
     console.log(`   ✅ Keychain ${service} updated`);
   }
 }
