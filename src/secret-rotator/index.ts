@@ -62,6 +62,15 @@ const SKIP_DIRS = new Set([
   'node_modules', '.git', 'dist', 'build', '__pycache__', '.venv', 'venv',
 ]);
 
+const shouldSkipFile = (filePath: string): boolean => {
+  const base = path.basename(filePath);
+  // Skip backup files
+  if (base.includes('.bak')) return true;
+  // Skip swap / temp files
+  if (base.endsWith('~') || base.startsWith('.#')) return true;
+  return false;
+};
+
 // ---------------------------------------------------------------------------
 // SecretRotator — general-purpose, works for any key in any project
 // ---------------------------------------------------------------------------
@@ -74,6 +83,7 @@ export class SecretRotator {
     const results: ScanResult[] = [];
 
     const scanFile = (filePath: string) => {
+      if (shouldSkipFile(filePath)) return;
       try {
         const stat = fs.statSync(filePath);
         if (stat.size > 512_000) return; // skip files > 500 KB
@@ -130,9 +140,15 @@ export class SecretRotator {
           fs.copyFileSync(filePath, backup);
         }
 
+        if (shouldSkipFile(filePath)) continue;
         let content = fs.readFileSync(filePath, 'utf8');
         const regex = new RegExp(`(${this.escapeRegex(keyName)}\\s*[=:]\\s*["']?)[^"'\\n,}]+(["']?)`, 'g');
-        const replaced = content.replace(regex, `$1${newValue}$2`);
+        const replaced = content.replace(regex, (match, prefix, trailingQuote) => {
+          const currentVal = match.slice(prefix.length, trailingQuote ? -trailingQuote.length : undefined);
+          // Don't overwrite env var references like ${KEY} or $KEY
+          if (/^\$\{?\w+\}?$/.test(currentVal.trim())) return match;
+          return `${prefix}${newValue}${trailingQuote}`;
+        });
 
         if (replaced !== content) {
           if (!dryRun) fs.writeFileSync(filePath, replaced);
@@ -198,6 +214,7 @@ export class SecretRotator {
     const keyMap = new Map<string, Set<string>>();
 
     const scanFile = (filePath: string) => {
+      if (shouldSkipFile(filePath)) return;
       try {
         const stat = fs.statSync(filePath);
         if (stat.size > 512_000) return;
