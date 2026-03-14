@@ -93,6 +93,7 @@ export class SecretRotator {
 
   private async updateKeychain(keyName: string, newValue: string, dryRun: boolean) {
     const service = `openclaw-env:${keyName}`;
+    console.log(`   🔑 Upserting Keychain: ${service}`);
     if (dryRun) {
       console.log(`   [DRY] Would update Keychain ${service}`);
       return;
