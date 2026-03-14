@@ -10,7 +10,10 @@
     "test": "echo \"Add tests later\" && exit 0",
     "lint": "eslint . --ext .ts",
     "prepare": "npm run build",
-    "rotate-key": "ts-node --transpile-only src/secret-rotator/index.ts rotate"
+    "rotate-key": "ts-node --transpile-only src/secret-rotator/index.ts",
+    "scan-key": "ts-node --transpile-only src/secret-rotator/index.ts scan",
+    "verify-key": "ts-node --transpile-only src/secret-rotator/index.ts verify",
+    "list-keys": "ts-node --transpile-only src/secret-rotator/index.ts list"
   },
   "dependencies": {
     "zod": "^3.24.0",
