@@ -44,4 +44,15 @@ npm install          # TS + IOL
 cargo build          # Rust (optional)
 npx prisma generate  # DB (optional)
 ```
+
+## Copilot project skills
+
+This repository includes project-scoped agent skills in `.github/skills`:
+
+- `github-actions-failure-debugging` for CI/workflow troubleshooting in this repo
+- `schema-change-preflight` with `preflight-schema-change.sh` for schema/workflow-sensitive preflight checks
+- `nostr-schema-sync` for keeping schema-derived TS/Rust/Prisma artifacts aligned
+- `secret-rotation-security-audit` for safe secret-rotation changes and validation
+
+These skills are designed for Copilot-compatible agent hosts that support `SKILL.md` project skills.
 Last updated: March 10, 2026
