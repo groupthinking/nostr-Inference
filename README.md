@@ -1,5 +1,12 @@
 # nostr-Inference
 
+
+
+Nostr schemas + registry events
+              ↓
+     edge / cloud / hybrid
+        task orchestration
+
 Nostr registry-of-kinds → full codegen (JSON Schema, TS/Zod, Rust, DB) + decentralized events (kind 30078) + **Inference Orchestration Layer** (Edge-Cloud Continuum for browser extensions).
 
 ## What's inside (everything we built)
