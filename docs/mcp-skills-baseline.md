@@ -48,6 +48,25 @@ The following project skills were added under `.github/skills/`:
 - No native MCP server/client implementation is present in runtime source files.
 - No direct in-repo usage of `server/discover` or `_meta.io.modelcontextprotocol/clientCapabilities` was found.
 
+### Host, client, server mapping for this repo
+
+- Host:
+  - the agent runtime that coordinates tool execution and permissions
+  - manages multiple tool clients and context aggregation during maintenance tasks
+- Clients:
+  - per-server MCP clients created by the host runtime
+  - send per-request protocol version and client capability metadata
+- Servers:
+  - MCP servers (for example GitHub MCP endpoints) that expose tools/resources used during repo operations
+  - return supported versions and capabilities through discovery
+
+### Design-principle fit
+
+- Easy-to-build servers: this repo currently consumes external MCP servers rather than embedding one.
+- Composability: maintenance tasks compose multiple MCP servers/tools as needed.
+- Isolation: server interactions are isolated by the host runtime and per-client boundaries.
+- Progressive features: capability negotiation enables incremental feature use without hard-coding assumptions.
+
 ### Baseline MCP capability negotiation status
 
 - Baseline MCP tool access is functional through the host environment (GitHub MCP integration).
@@ -62,6 +81,7 @@ From MCP 2026-07-28 `server/discover`:
 - clients send per-request `_meta` including protocol version and client capabilities
 - servers return supported versions and capabilities
 - clients and servers must respect declared capabilities
+- optional discovery can happen before other requests for up-front capability awareness
 
 ## Decision and next steps
 
