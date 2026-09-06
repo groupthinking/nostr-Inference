@@ -13,7 +13,7 @@ Usage:
 
 Expected behavior:
 
-1. Verify this is the `nostr-Inference` repository and `schema.json` is present.
+1. Verify `schema.json` is present at the repository root.
 2. Show whether `schema.json` or `.github/workflows/publish-registry.yml` changed.
 3. Run repository validations used for CI confidence:
 - `npm run lint`
