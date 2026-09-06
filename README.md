@@ -45,12 +45,22 @@ cargo build          # Rust (optional)
 npx prisma generate  # DB (optional)
 ```
 
+## Copilot project skills
+
+This repository includes project-scoped agent skills in `.github/skills`:
+
+- `github-actions-failure-debugging` for CI/workflow troubleshooting in this repo
+- `schema-change-preflight` with `preflight-schema-change.sh` for schema/workflow-sensitive preflight checks
+- `nostr-schema-sync` for keeping schema-derived TS/Rust/Prisma artifacts aligned
+- `secret-rotation-security-audit` for safe secret-rotation changes and validation
+- `gh-fix-ci` for diagnosing and fixing failing GitHub Actions workflows
+- `security-threat-model` for threat-modeling security-sensitive changes
+- `mcp-capability-negotiation` for MCP server capability-negotiation assessments
+
+These skills are designed for Copilot-compatible agent hosts that support `SKILL.md` project skills.
+
 ## MCP and Agent Skills
 
 - MCP/skills baseline and capability-negotiation assessment: `docs/mcp-skills-baseline.md`
-- Project skills for Copilot-compatible agents:
-  - `.github/skills/gh-fix-ci/SKILL.md`
-  - `.github/skills/security-threat-model/SKILL.md`
-  - `.github/skills/mcp-capability-negotiation/SKILL.md`
 
 Last updated: March 10, 2026
