@@ -44,4 +44,13 @@ npm install          # TS + IOL
 cargo build          # Rust (optional)
 npx prisma generate  # DB (optional)
 ```
+
+## MCP and Agent Skills
+
+- MCP/skills baseline and capability-negotiation assessment: `docs/mcp-skills-baseline.md`
+- Project skills for Copilot-compatible agents:
+  - `.github/skills/gh-fix-ci/SKILL.md`
+  - `.github/skills/security-threat-model/SKILL.md`
+  - `.github/skills/mcp-capability-negotiation/SKILL.md`
+
 Last updated: March 10, 2026
