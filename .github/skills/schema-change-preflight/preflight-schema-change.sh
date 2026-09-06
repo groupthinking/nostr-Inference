@@ -13,8 +13,14 @@ echo "== Repository check =="
 echo "repo: $repo_root"
 
 echo "== Change summary =="
-if git rev-parse --verify HEAD~1 >/dev/null 2>&1; then
-  git diff --name-only HEAD~1..HEAD | rg -n "^(schema\.json|\.github/workflows/publish-registry\.yml)$" || true
+base_ref=""
+if git rev-parse --verify --quiet origin/main >/dev/null 2>&1; then
+  base_ref="$(git merge-base HEAD origin/main 2>/dev/null || true)"
+fi
+if [[ -n "$base_ref" ]]; then
+  git diff --name-only "$base_ref"..HEAD | grep -E "^(schema\.json|\.github/workflows/publish-registry\.yml)$" || true
+elif git rev-parse --verify --quiet HEAD~1 >/dev/null 2>&1; then
+  git diff --name-only HEAD~1..HEAD | grep -E "^(schema\.json|\.github/workflows/publish-registry\.yml)$" || true
 else
   git status --short -- schema.json .github/workflows/publish-registry.yml || true
 fi
