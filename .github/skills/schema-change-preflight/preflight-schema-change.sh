@@ -17,10 +17,18 @@ base_ref=""
 if git rev-parse --verify --quiet origin/main >/dev/null 2>&1; then
   base_ref="$(git merge-base HEAD origin/main 2>/dev/null || true)"
 fi
+
+target_pattern="^(schema\.json|\.github/workflows/publish-registry\.yml)$"
+
 if [[ -n "$base_ref" ]]; then
-  git diff --name-only "$base_ref"..HEAD | grep -E "^(schema\.json|\.github/workflows/publish-registry\.yml)$" || true
+  git diff --name-only "$base_ref"..HEAD | grep -E "$target_pattern" || true
 elif git rev-parse --verify --quiet HEAD~1 >/dev/null 2>&1; then
-  git diff --name-only HEAD~1..HEAD | grep -E "^(schema\.json|\.github/workflows/publish-registry\.yml)$" || true
+  earliest_available_ref="$(git rev-list --max-parents=0 HEAD | head -n 1 || true)"
+  if [[ -n "$earliest_available_ref" ]]; then
+    git diff --name-only "$earliest_available_ref"..HEAD | grep -E "$target_pattern" || true
+  else
+    git diff --name-only HEAD~1..HEAD | grep -E "$target_pattern" || true
+  fi
 else
   git status --short -- schema.json .github/workflows/publish-registry.yml || true
 fi

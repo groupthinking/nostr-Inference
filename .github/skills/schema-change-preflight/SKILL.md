@@ -14,7 +14,7 @@ Usage:
 Expected behavior:
 
 1. Verify `schema.json` is present at the repository root.
-2. Show whether `schema.json` or `.github/workflows/publish-registry.yml` changed.
+2. Show whether `schema.json` or `.github/workflows/publish-registry.yml` changed compared with `origin/main` merge-base when available, or across available local branch history when `origin/main` is unavailable.
 3. Run repository validations used for CI confidence:
 - `npm run lint`
 - `npm run build`
